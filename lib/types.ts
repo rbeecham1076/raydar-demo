@@ -4,6 +4,7 @@ export type Category = "Sports" | "Teacher" | "Seasonal" | "Lifestyle" | "Occupa
 export type SourceType = "Marketplace Search" | "Social Discovery" | "Search Trends" | "Wholesale Signals" | "Competitor Movement" | "Historical Performance";
 export type PipelineStage = "RESEARCH" | "WATCHING" | "APPROVED" | "BUILDING" | "READY" | "LISTED" | "TESTING" | "WINNER";
 export type PerformanceResult = "Winner" | "Testing" | "Underperformed";
+export type TrendLifecycle = "Emerging" | "Accelerating" | "Growing" | "Mature" | "Declining";
 
 export type ScoreDimensions = {
   demand:number;
@@ -32,13 +33,14 @@ export type Signal = {
   category:Category;
   sourceType:SourceType;
   momentum:"Gaining"|"Stable"|"Declining";
-  lifecycle:"Emerging"|"Growing"|"Mature";
+  lifecycle:TrendLifecycle;
   confidence:number;
   movement:string;
   relatedOpportunity:string;
 };
 
 export type PaletteColor={name:string;hex:string};
+export type FontRoles={hero:string;supporting:string;accent:string;rationale:string;source:string};
 
 export type VisualRecipe={
   paletteName:string;
@@ -47,6 +49,7 @@ export type VisualRecipe={
   surfaceType:"Pattern"|"Texture"|"Pattern + Texture";
   illustration:string;
   typography:string;
+  fontRoles?:FontRoles;
   composition:string;
   rationale:string;
   avoid:string;
@@ -69,12 +72,19 @@ export type PhraseGuidance={
   alternatives:string[];
 };
 
+export type SeasonalTiming={designBy:string;listBy:string;peakSearch:string;retireReassess:string;note:string};
+export type ExpansionItem={type:string;priority:"HIGH"|"MEDIUM"|"LOW";reason:string};
+export type CannibalizationGuidance={status:"DIFFERENTIATE"|"BUNDLE"|"REWORK/REFRESH"|"REPLACE"|"SKIP";note:string};
+
 export type OpportunityIntelligence={
   marketOpportunity:number;
   brandFit:number;
   brandFitNote:string;
   phrase:PhraseGuidance;
   collection:{name:string;fit:number;note:string};
+  timing:SeasonalTiming;
+  expansion:ExpansionItem[];
+  cannibalization:CannibalizationGuidance;
   directions:DesignDirection[];
 };
 
