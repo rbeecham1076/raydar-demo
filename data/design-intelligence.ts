@@ -1,5 +1,6 @@
 import type { Category, Opportunity, OpportunityIntelligence, VisualRecipe } from "@/lib/types";
 import { getVisualRecipe } from "@/data/visual-recipes";
+import { RAYDAR_POLICY } from "@/lib/product-policy";
 
 const alternatePalettes:Record<Category,[string,{name:string;hex:string}[],string,{name:string;hex:string}[]]>= {
  Sports:["Fresh Sideline",[{name:"Pool",hex:"#6FA8A8"},{name:"Tomato",hex:"#D95C4B"},{name:"Butter",hex:"#E9D56C"},{name:"Ink",hex:"#27303D"}],"Electric Pep",[{name:"Hot Coral",hex:"#F06B5C"},{name:"Periwinkle",hex:"#7F83CF"},{name:"Lime",hex:"#D9E86D"},{name:"Cream",hex:"#F7EDDF"}]],
@@ -20,11 +21,11 @@ const collectionByCategory:Record<Category,{name:string;note:string}>={
 };
 
 function phraseGuidance(o:Opportunity){
- const saturated=o.saturationRisk>=38;
- const weak=o.demand<74;
- if(saturated) return {status:"REVISE" as const,current:o.name,rationale:"The market signal is useful, but the current wording or familiar phrase structure is saturated enough that freshness should come from naming as well as art direction.",alternatives:[`${o.name.replace(/Game Day/gi,"Sideline")} Social`,`The ${o.category} Club`,`${o.season} Social Edition`]};
- if(weak) return {status:"REVISE" as const,current:o.name,rationale:"The underlying lifestyle angle has whitespace, but the title needs more specificity or emotional pull before production.",alternatives:[`${o.name} Club`,`Weekend ${o.category} Society`,`${o.name} Edition`]};
- return {status:"KEEP" as const,current:o.name,rationale:"The phrase is clear enough to test without making naming the primary source of differentiation.",alternatives:[]};
+ const p=RAYDAR_POLICY.phrase;
+ if(o.saturationRisk>=p.avoidAtSaturation) return {status:"AVOID" as const,current:o.name,rationale:"The wording itself is saturated enough that Raydar should preserve the buyer need but replace the phrase structure entirely.",alternatives:["Use an original short title","Use a custom identity instead of a phrase",...(p.allowNoText?["No-text graphic direction"]:[])]};
+ if(o.saturationRisk>=p.reviseAtSaturation) return {status:"REVISE" as const,current:o.name,rationale:"The market signal is useful, but the current wording or familiar phrase structure is saturated enough that freshness should come from naming as well as art direction.",alternatives:[`${o.name.replace(/Game Day/gi,"Sideline")} Social`,`The ${o.category} Club`,`${o.season} Social Edition`,...(p.allowNoText?["No-text graphic direction"]:[])]};
+ if(o.demand<p.reviseBelowDemand) return {status:"REVISE" as const,current:o.name,rationale:"The underlying lifestyle angle has whitespace, but the title needs more specificity or emotional pull before production.",alternatives:[`${o.name} Club`,`Weekend ${o.category} Society`,`${o.name} Edition`,...(p.allowNoText?["No-text graphic direction"]:[])]};
+ return {status:"KEEP" as const,current:o.name,rationale:"The phrase is clear enough to test without making naming the primary source of differentiation.",alternatives:p.allowNoText?["No-text graphic direction"]:[]};
 }
 
 function variant(base:VisualRecipe,category:Category,kind:"trend"|"wild"):VisualRecipe{
@@ -49,14 +50,15 @@ export function getOpportunityIntelligence(o:Opportunity):OpportunityIntelligenc
  const marketOpportunity=o.score;
  const brandFit=Math.max(58,Math.min(97,Math.round((o.productFit*.45+o.repeatability*.25+o.customization*.15+o.confidence*.15) - (o.category==="Occupations"?6:0))));
  const collection=collectionByCategory[o.category];
+ const collectionFit=Math.round((o.repeatability+o.productFit)/2);
  return {
   marketOpportunity,
   brandFit,
   brandFitNote:brandFit>=85?"Strong fit with the current boutique design language and production model.":brandFit>=72?"Good opportunity with some adaptation needed to make it feel native to the brand.":"Commercially interesting but outside the current visual language; adapt deliberately rather than rejecting it.",
   phrase:phraseGuidance(o),
-  collection:{name:collection.name,fit:Math.round((o.repeatability+o.productFit)/2),note:collection.note},
+  collection:{name:collection.name,fit:collectionFit,note:collectionFit>=RAYDAR_POLICY.collection.minimumFit?`${collection.note} Strong enough to consider a ${RAYDAR_POLICY.collection.preferredSize.min}–${RAYDAR_POLICY.collection.preferredSize.max} design mini-collection.`:`${collection.note} Keep it standalone until collection fit strengthens.`},
   directions:[
-   {id:`${o.id}-best`,kind:"BEST BET",label:"Best Bet",description:"Highest-confidence balance of demand, differentiation, production fit, and buyer familiarity.",recipe:base},
+   {id:`${o.id}-best`,kind:"BEST BET",label:"Best Bet",description:`Highest-confidence balance of demand, differentiation, production fit, and buyer familiarity. Directions must differ meaningfully across at least ${RAYDAR_POLICY.directions.minimumMeaningfulDifferences} visual dimensions.`,recipe:base},
    {id:`${o.id}-trend`,kind:"TREND FORWARD",label:"Trend Forward",description:"More fashion-led and emerging while staying commercially recognizable.",recipe:variant(base,o.category,"trend")},
    {id:`${o.id}-wild`,kind:"WILDCARD",label:"Wildcard",description:"A more original visual route intended to create feed-stopping novelty without losing product clarity.",recipe:variant(base,o.category,"wild")}
   ]
