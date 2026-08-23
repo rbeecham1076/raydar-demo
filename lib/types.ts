@@ -52,10 +52,37 @@ export type VisualRecipe={
   avoid:string;
 };
 
+export type DirectionKind="BEST BET"|"TREND FORWARD"|"WILDCARD";
+
+export type DesignDirection={
+  id:string;
+  kind:DirectionKind;
+  label:string;
+  description:string;
+  recipe:VisualRecipe;
+};
+
+export type PhraseGuidance={
+  status:"KEEP"|"REVISE"|"AVOID";
+  current:string;
+  rationale:string;
+  alternatives:string[];
+};
+
+export type OpportunityIntelligence={
+  marketOpportunity:number;
+  brandFit:number;
+  brandFitNote:string;
+  phrase:PhraseGuidance;
+  collection:{name:string;fit:number;note:string};
+  directions:DesignDirection[];
+};
+
 export type ApprovedDesignBrief={
   opportunityId:string;
   opportunityName:string;
   status:"APPROVED";
+  direction:DirectionKind;
   recipe:VisualRecipe;
   graphicElements:string;
   generationPrompt:string;
