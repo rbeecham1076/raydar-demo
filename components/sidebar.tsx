@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, BarChart3, BriefcaseBusiness, FileText, Gauge, Radar, Workflow } from "lucide-react";
+import { Activity, BarChart3, BriefcaseBusiness, FileText, Gauge, Images, Radar, Workflow } from "lucide-react";
 
 const nav = [
   ["/","Overview",Gauge],
   ["/signals","Signals",Radar],
   ["/opportunities","Opportunities",Activity],
+  ["/inspiration","Inspiration Library",Images],
   ["/decision-brief","Decision Brief",BriefcaseBusiness],
   ["/pipeline","Pipeline",Workflow],
   ["/performance","Performance",BarChart3],
