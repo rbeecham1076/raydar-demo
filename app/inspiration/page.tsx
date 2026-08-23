@@ -16,33 +16,31 @@ const catalog = [
 ];
 
 const demoExamples=[
- {title:"Varsity Patchwork",label:"Generated example",cls:"patch",tags:["collegiate","pattern","visible craft"],copy:"Example of how Raydar can translate a market signal into a surface direction without exposing the private reference library."},
- {title:"Boutique Stripe",label:"Generated example",cls:"stripe",tags:["stripe","sports","merchandising"],copy:"A generalized visual cue for scale, rhythm, and color blocking—not a source design."},
- {title:"Vintage Floral Fill",label:"Generated example",cls:"floral",tags:["floral","feminine","letter fill"],copy:"Shows the type of pattern recommendation a private visual reference could inform."},
- {title:"Washed Heritage Ink",label:"Generated example",cls:"ink",tags:["texture","americana","vintage"],copy:"Demonstrates a texture direction that can be attached to a product brief."},
- {title:"Quilted School Spirit",label:"Generated example",cls:"quilt",tags:["pieced","school spirit","tactile"],copy:"A safe public example of Raydar combining craft texture with a commercial product use."},
- {title:"Patina Coastal",label:"Generated example",cls:"patina",tags:["palette","coastal","heritage"],copy:"Illustrates palette-and-surface guidance while proprietary inspiration remains private."},
+ {title:"Varsity Patchwork",label:"Visual example",cls:"patch",tags:["collegiate","pattern","visible craft"],copy:"A surface direction built from current collegiate and handcrafted signals."},
+ {title:"Boutique Stripe",label:"Visual example",cls:"stripe",tags:["stripe","sports","merchandising"],copy:"A polished stripe treatment for scale, rhythm, and color blocking."},
+ {title:"Vintage Floral Fill",label:"Visual example",cls:"floral",tags:["floral","feminine","letter fill"],copy:"A supporting floral direction designed for letter fills and framing details."},
+ {title:"Washed Heritage Ink",label:"Visual example",cls:"ink",tags:["texture","americana","vintage"],copy:"A subtle worn-print texture for nostalgic, heritage-inspired graphics."},
+ {title:"Quilted School Spirit",label:"Visual example",cls:"quilt",tags:["pieced","school spirit","tactile"],copy:"A tactile pieced direction for numbers, mascots, and oversized initials."},
+ {title:"Patina Coastal",label:"Visual example",cls:"patina",tags:["palette","coastal","heritage"],copy:"A coastal heritage palette with oxidized blue-green and softened neutrals."},
 ];
 
 const rules=[
- ["Private reference layer","The operating version can ingest Rachel’s saved inspiration images and tag them for palette, pattern, typography, texture, composition, motif, season, and buyer fit."],
- ["Cross-source repetition","Prefer directions that repeat independently across market, social, boutique, and competitor evidence."],
- ["Originality boundary","Extract visual direction, product structure, buyer behavior, and merchandising patterns—never copy a source composition."],
- ["Public-demo boundary","The portfolio demo shows generated/generalized examples only. Private inspiration images and proprietary research stay out of the public interface."],
+ ["Cross-source repetition","Prefer directions that repeat independently across marketplace, social, boutique, and competitor signals."],
+ ["Taste filter","A popular surface still has to improve the specific design idea. Avoid stacking trends without a strong concept."],
+ ["Originality boundary","Extract palette, hierarchy, pattern family, texture, and merchandising cues without reproducing another composition."],
+ ["Production fit","Recommend a surface only when it supports the actual product, buyer, season, and intended use."],
 ];
 
 export default function InspirationPage(){return <div className="page inspirationPage">
- <PageHeader kicker="VISUAL INTELLIGENCE" title="Pattern + Texture Library" copy="A public demonstration of how Raydar turns private visual research into specific, usable design direction." />
- <div className="inspoHero"><div><span className="inspoStamp">PRIVATE INPUT → SAFE OUTPUT</span><h2>Inspiration becomes <em>direction, not duplication.</em></h2><p>In the operating version, saved inspiration is a private research layer. Raydar extracts useful signals—palette, hierarchy, pattern density, typography, texture, motif scale, and merchandising energy—then produces original recommendations.</p></div><div className="inspoStack"><span>PRIVATE INSPO LIBRARY</span><span>MARKET SIGNALS</span><span>COMPETITOR RESEARCH</span><span>BOUTIQUE TASTE FILTER</span><b>→ ORIGINAL BRIEF</b></div></div>
+ <PageHeader kicker="VISUAL INTELLIGENCE" title="Pattern + Texture Library" copy="A visual recommendation layer that turns market signals into specific color, pattern, texture, and composition direction." />
+ <div className="inspoHero"><div><span className="inspoStamp">SIGNAL → VISUAL DIRECTION</span><h2>Inspiration becomes <em>clear design direction.</em></h2><p>Raydar translates visual and market signals into practical recommendations for palette, hierarchy, pattern density, typography, texture, motif scale, and merchandising energy.</p></div><div className="inspoStack"><span>VISUAL SIGNALS</span><span>MARKET SIGNALS</span><span>COMPETITOR FORMULAS</span><span>BOUTIQUE TASTE FILTER</span><b>→ DESIGN BRIEF</b></div></div>
 
- <div className="privateBoundary"><div><span className="eyebrow">PUBLIC DEMO BOUNDARY</span><h2>Your private gallery is not displayed here.</h2></div><p>The real <strong>Design Trends Inspo</strong> collection belongs to the private operating side of Raydar. This portfolio demo uses generalized/generated visual examples to demonstrate the feature without publishing source inspiration or proprietary research.</p></div>
+ <div className="libraryHead"><div><span className="eyebrow">VISUAL REFERENCES</span><h2>Examples of Raydar’s direction</h2></div><p>These examples show the kinds of visual treatments Raydar can pair with a design opportunity.</p></div>
+ <div className="demoReferenceGrid">{demoExamples.map((x,i)=><Card className="demoReferenceCard" key={x.title}><div className={`demoReferenceArt ${x.cls}`}><span>REF {String(i+1).padStart(2,"0")}</span></div><div className="inspoMeta"><span>{x.label}</span><b>RECOMMENDED USE</b></div><h3>{x.title}</h3><div className="referenceTags">{x.tags.map(t=><span key={t}>{t}</span>)}</div><p>{x.copy}</p></Card>)}</div>
 
- <div className="libraryHead"><div><span className="eyebrow">DEMO VISUAL REFERENCES</span><h2>Generated examples of the workflow</h2></div><p>These are illustrative surfaces created inside the demo. They show what Raydar can recommend after analyzing private visual references.</p></div>
- <div className="demoReferenceGrid">{demoExamples.map((x,i)=><Card className="demoReferenceCard" key={x.title}><div className={`demoReferenceArt ${x.cls}`}><span>DEMO {String(i+1).padStart(2,"0")}</span></div><div className="inspoMeta"><span>{x.label}</span><b>SAFE TO SHOW</b></div><h3>{x.title}</h3><div className="referenceTags">{x.tags.map(t=><span key={t}>{t}</span>)}</div><p>{x.copy}</p></Card>)}</div>
-
- <div className="libraryHead"><div><span className="eyebrow">MARKET-LED SURFACE CATALOG</span><h2>{catalog.length} directions Raydar can recommend</h2></div><p>The catalog combines generalized market evidence with the private taste layer while keeping proprietary source material out of the demo.</p></div>
+ <div className="libraryHead"><div><span className="eyebrow">SURFACE CATALOG</span><h2>{catalog.length} directions Raydar can recommend</h2></div><p>Each opportunity can receive a different visual recipe based on category, season, buyer fit, current signals, and saturation risk.</p></div>
  <div className="inspoGrid">{catalog.map((x,i)=><Card key={x.name} className="inspoCard"><div className={`swatch ${x.cls}`}><span>{String(i+1).padStart(2,"0")}</span></div><div className="inspoMeta"><span>{x.type}</span><b>{x.signal}</b></div><h3>{x.name}</h3><p className="bestUse"><strong>Best use:</strong> {x.use}</p><p>{x.note}</p></Card>)}</div>
- <div className="libraryHead rulesHead"><div><span className="eyebrow">SYSTEM ARCHITECTURE</span><h2>How the private layer works</h2></div></div>
+ <div className="libraryHead rulesHead"><div><span className="eyebrow">RECOMMENDATION LOGIC</span><h2>How Raydar chooses a direction</h2></div></div>
  <div className="ruleGrid">{rules.map(([t,d],i)=><div className="rule" key={t}><span>0{i+1}</span><div><h3>{t}</h3><p>{d}</p></div></div>)}</div>
- <Card className="sourceNote"><span className="eyebrow">SYSTEM PRINCIPLE</span><h3>Reference the signal. Rebuild the idea.</h3><p>The private visual library makes recommendations more specific. The public demo proves the workflow without exposing the actual inspiration archive, competitor screenshots, or proprietary intelligence behind it.</p></Card>
+ <Card className="sourceNote"><span className="eyebrow">SYSTEM PRINCIPLE</span><h3>Use the signal. Create something distinct.</h3><p>Raydar’s job is to make every design brief more specific and commercially useful while preserving enough creative freedom for an original final design.</p></Card>
  </div>}
