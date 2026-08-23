@@ -1,8 +1,7 @@
-"use client";
-
-import { useMemo, useState } from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { Card, PageHeader } from "@/components/ui";
-import { inspirationRefs, inspirationTags, inspirationUrl } from "@/data/inspiration-library";
+import { InspirationGallery, type GalleryRef } from "@/components/inspiration-gallery";
 
 const catalog = [
   {name:"Irregular Checker",type:"Pattern",signal:"HIGH",use:"School identity fills, side panels, numbers",note:"Hand-drawn or imperfect only; avoid generic checker stacks.",cls:"checker"},
@@ -26,19 +25,29 @@ const rules=[
   ["Production fit","Recommend a surface only when it supports the actual product: letter fill, background, border, illustration texture, or mockup direction."],
 ];
 
+const tagSets=[["composition","boutique-fit","color"],["pattern","typography","color"],["texture","composition","boutique-fit"],["motif","composition","seasonal"],["pattern","color","boutique-fit"],["typography","composition","texture"],["color","pattern","seasonal"],["composition","motif","boutique-fit"]];
+
+function loadGallery():GalleryRef[]{
+ const dir=path.join(process.cwd(),"Design Trends Inspo");
+ if(!fs.existsSync(dir)) return [];
+ return fs.readdirSync(dir).filter(file=>/\.(jpe?g|png|webp)$/i.test(file)).sort().map((file,i)=>({
+   id:`folder-ref-${i+1}`,
+   file,
+   label:`Saved visual reference ${String(i+1).padStart(3,"0")}`,
+   tags:tagSets[i%tagSets.length],
+   url:`https://raw.githubusercontent.com/rbeecham1076/raydar-demo/main/Design%20Trends%20Inspo/${encodeURIComponent(file)}`,
+   note:"Use for visual-direction cues only: palette, hierarchy, pattern density, typography, texture, motif scale, or merchandising energy. Do not reproduce the source design."
+ }));
+}
+
 export default function InspirationPage(){
- const [active,setActive]=useState("all");
- const refs=useMemo(()=>active==="all"?inspirationRefs:inspirationRefs.filter(r=>r.tags.includes(active)),[active]);
+ const refs=loadGallery();
  return <div className="page inspirationPage">
   <PageHeader kicker="VISUAL INTELLIGENCE" title="Pattern + Texture Library" copy="Saved visual references, market signals, and boutique taste rules combined into a practical recommendation layer." />
   <div className="inspoHero"><div><span className="inspoStamp">CURATED, NOT COPIED</span><h2>Give every idea a <em>surface point of view.</em></h2><p>Raydar uses saved inspiration as evidence for palette, hierarchy, pattern density, typography, texture, and merchandising energy—never as artwork to reproduce.</p></div><div className="inspoStack"><span>SAVED REFERENCES</span><span>MARKET SIGNALS</span><span>COMPETITOR FORMULAS</span><span>BOUTIQUE TASTE FILTER</span><b>→ DESIGN BRIEF</b></div></div>
 
-  <div className="libraryHead"><div><span className="eyebrow">SAVED VISUAL REFERENCES</span><h2>{inspirationRefs.length} references connected</h2></div><p>These images now live inside the working visual-intelligence layer. Filter by the kind of direction you need, then Raydar can surface matching references in a decision brief.</p></div>
-  <div className="inspoFilters">{inspirationTags.map(tag=><button key={tag} className={active===tag?"isActive":""} onClick={()=>setActive(tag)}>{tag.replace("-"," ")}</button>)}</div>
-  <div className="referenceGrid">{refs.map(ref=><article className="referenceCard" key={ref.id}>
-    <a href={inspirationUrl(ref)} target="_blank" rel="noreferrer" className="referenceImage"><img src={inspirationUrl(ref)} alt={ref.label}/><span>OPEN REFERENCE ↗</span></a>
-    <div className="referenceBody"><div className="referenceTags">{ref.tags.filter(t=>t!=="saved-reference").map(t=><span key={t}>{t}</span>)}</div><h3>{ref.label}</h3><p>{ref.note}</p></div>
-  </article>)}</div>
+  <div className="libraryHead"><div><span className="eyebrow">SAVED VISUAL REFERENCES</span><h2>{refs.length} references connected</h2></div><p>The full <code>Design Trends Inspo</code> folder is read automatically at build time. Add images to that folder and the gallery expands without hand-editing this page.</p></div>
+  <InspirationGallery refs={refs}/>
 
   <div className="libraryHead"><div><span className="eyebrow">MARKET-LED SURFACE CATALOG</span><h2>{catalog.length} directions to test</h2></div><p>Generalized pattern and texture formulas keep the public demo useful without exposing proprietary research.</p></div>
   <div className="inspoGrid">{catalog.map((x,i)=><Card key={x.name} className="inspoCard"><div className={`swatch ${x.cls}`}><span>{String(i+1).padStart(2,"0")}</span></div><div className="inspoMeta"><span>{x.type}</span><b>{x.signal}</b></div><h3>{x.name}</h3><p className="bestUse"><strong>Best use:</strong> {x.use}</p><p>{x.note}</p></Card>)}</div>
