@@ -1,6 +1,7 @@
 import "./globals.css";
 import "./inspiration.css";
 import "./typography.css";
+import "./library.css";
 import { Sidebar } from "@/components/sidebar";
 
 export const metadata = {
