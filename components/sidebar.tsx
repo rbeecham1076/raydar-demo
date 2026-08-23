@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, BarChart3, BriefcaseBusiness, Gauge, Radar, Workflow } from "lucide-react";
+import { Activity, BarChart3, BriefcaseBusiness, FileText, Gauge, Radar, Workflow } from "lucide-react";
 
 const nav = [
   ["/","Overview",Gauge],
@@ -11,6 +11,7 @@ const nav = [
   ["/decision-brief","Decision Brief",BriefcaseBusiness],
   ["/pipeline","Pipeline",Workflow],
   ["/performance","Performance",BarChart3],
+  ["/case-study","Case Study",FileText],
 ] as const;
 
 export function Sidebar() {
