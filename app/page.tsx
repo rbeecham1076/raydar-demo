@@ -1,10 +1,14 @@
 import Link from "next/link";
-import { opportunities, pipeline, signals } from "@/data/demo-data";
+import { opportunities, performance, pipeline, signals } from "@/data/demo-data";
+import type { PerformanceRecord } from "@/lib/types";
+import { buildWeeklyCommandCenter } from "@/lib/command-center";
 import { Card, Badge, Score } from "@/components/ui";
 import { MarketSignalLab } from "@/components/market-signal-lab";
 
 export default function Overview() {
   const top = opportunities[0];
+  const command=buildWeeklyCommandCenter(opportunities,performance as PerformanceRecord[]);
+  const queues=[["BUILD THESE",command.build],["WATCH THESE",command.watch],["REFRESH / REWORK",command.refresh],["SCALE THESE",command.scale],["RETIRE / HOLD",command.retire],["SKIP THIS WEEK",command.skip]] as const;
   return <div>
     <div className="topbar"><span className="eyebrow">RAYDAR / OVERVIEW</span><span className="statusDot">System current</span></div>
     <section className="hero">
@@ -15,6 +19,11 @@ export default function Overview() {
     <div className="kpis">
       {[[42,"Active Signals","+8 this week"],[12,"Qualified Opportunities","7 high confidence"],[87,"Average Confidence","evidence weighted"],[4,"Launch Ready","owner approved"]].map(([v,l,s])=><Card key={l as string}><Score value={v as number}/><h3>{l}</h3><p>{s}</p></Card>)}
     </div>
+
+    <Card className="commandCenter">
+      <div className="cardHead"><div><span className="eyebrow">WEEKLY COMMAND CENTER</span><h2>What moves the whole shop forward.</h2></div><span className="statusDot">Shop-growth optimized</span></div>
+      <div className="commandGrid">{queues.map(([label,items])=><div className="commandColumn" key={label}><h3>{label}</h3>{items.length?items.slice(0,3).map(item=><div className="commandItem" key={item.name}><strong>{item.name}</strong>{item.score&&<b>{item.score}</b>}<p>{item.reason}</p></div>):<p className="muted">Nothing currently qualifies.</p>}</div>)}</div>
+    </Card>
 
     <MarketSignalLab />
 
