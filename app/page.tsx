@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { opportunities, pipeline, signals } from "@/data/demo-data";
 import { Card, Badge, Score } from "@/components/ui";
+import { MarketSignalLab } from "@/components/market-signal-lab";
 
 export default function Overview() {
   const top = opportunities[0];
@@ -14,6 +15,8 @@ export default function Overview() {
     <div className="kpis">
       {[[42,"Active Signals","+8 this week"],[12,"Qualified Opportunities","7 high confidence"],[87,"Average Confidence","evidence weighted"],[4,"Launch Ready","owner approved"]].map(([v,l,s])=><Card key={l as string}><Score value={v as number}/><h3>{l}</h3><p>{s}</p></Card>)}
     </div>
+
+    <MarketSignalLab />
 
     <div className="grid2">
       <Card className="topOpportunity">
