@@ -1,0 +1,236 @@
+/*
+ * Raydar visual refinement inspired by the user's saved design references.
+ * The references inform palette, rhythm, geometry, and editorial contrast;
+ * no third-party inspiration image is embedded in the public product.
+ */
+
+:root{
+  --signal-pink:#FF4FA3;
+  --signal-orange:#FF8A35;
+  --signal-cyan:#45D7D1;
+  --signal-periwinkle:#8F98FF;
+  --signal-yellow:#F4DF58;
+  --signal-cream:#FFF4E7;
+}
+
+body{
+  background:
+    radial-gradient(circle at 78% -10%, rgba(143,152,255,.11), transparent 30rem),
+    radial-gradient(circle at 34% 8%, rgba(69,215,209,.055), transparent 25rem),
+    var(--bg);
+}
+
+/* Give the console a little more boutique/editorial character without
+   turning it into a playful consumer app. */
+.sidebar{
+  background:
+    linear-gradient(180deg, rgba(255,79,163,.035), transparent 24%),
+    #0d101a;
+}
+
+.brandmark{
+  position:relative;
+  border-color:var(--signal-cyan);
+  color:var(--signal-cream);
+  overflow:hidden;
+}
+.brandmark::after{
+  content:"";
+  position:absolute;
+  left:-25%; right:-25%; bottom:4px;
+  height:3px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--signal-pink),var(--signal-orange),var(--signal-yellow),var(--signal-cyan));
+  transform:rotate(-7deg);
+}
+
+.sidebar nav a.active{
+  background:linear-gradient(90deg,rgba(143,152,255,.12),rgba(69,215,209,.045));
+}
+.sidebar nav a.active svg{color:var(--signal-cyan)}
+
+.hero{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:310px;
+  height:150px;
+  right:10px;
+  top:22px;
+  opacity:.12;
+  background:
+    radial-gradient(circle at 20px 20px,var(--signal-pink) 0 8px,transparent 9px),
+    radial-gradient(circle at 60px 60px,var(--signal-orange) 0 8px,transparent 9px),
+    radial-gradient(circle at 100px 20px,var(--signal-cyan) 0 8px,transparent 9px);
+  background-size:80px 80px;
+  transform:rotate(-7deg);
+  mask-image:linear-gradient(90deg,transparent,#000 25%,#000);
+}
+.hero h1 em{color:var(--signal-cream)}
+.hero h1 em::after{
+  content:"";
+  display:inline-block;
+  width:42px;
+  height:9px;
+  margin-left:10px;
+  border-radius:50%;
+  border-top:2px solid var(--signal-pink);
+  border-bottom:2px solid var(--signal-cyan);
+  transform:rotate(-4deg) translateY(-7px);
+}
+
+.principle{
+  border-left-color:rgba(255,244,231,.18);
+}
+.principle strong{color:var(--signal-cream)}
+
+.card{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.018),transparent 42%),
+    var(--surface);
+  transition:border-color .18s ease,transform .18s ease,background .18s ease;
+}
+.card:hover{
+  transform:translateY(-1px);
+  border-color:#444d6b;
+}
+
+/* Alternating micro-accent strips echo the user's checkerboard / wavy /
+   high-color references while keeping the interface data-first. */
+.kpis .card::before,
+.grid2 .card::before{
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:2px;
+  background:var(--signal-cyan);
+  opacity:.85;
+}
+.kpis .card:nth-child(2)::before{background:var(--signal-pink)}
+.kpis .card:nth-child(3)::before{background:var(--signal-periwinkle)}
+.kpis .card:nth-child(4)::before{background:var(--signal-orange)}
+.grid2 .card:nth-child(even)::before{background:var(--signal-periwinkle)}
+
+.eyebrow{
+  color:#AAB0C4;
+}
+.topOpportunity .eyebrow,
+.memoHead .eyebrow,
+.pageHeader .eyebrow{
+  color:var(--signal-cyan);
+}
+
+.score{color:var(--signal-yellow)}
+.kpis .card:nth-child(2) .score{color:var(--signal-pink)}
+.kpis .card:nth-child(3) .score{color:var(--signal-periwinkle)}
+.kpis .card:nth-child(4) .score{color:var(--signal-orange)}
+
+.badge{
+  color:var(--signal-cream);
+  border-color:#3d4663;
+  background:linear-gradient(90deg,rgba(255,79,163,.09),rgba(143,152,255,.08));
+}
+
+.cta,.textLink,.cardHead a{
+  color:var(--signal-cyan);
+}
+.cta{
+  padding-bottom:2px;
+  border-bottom:1px solid rgba(69,215,209,.45);
+}
+
+.miniGrid{
+  background-image:linear-gradient(90deg,transparent 49%,rgba(255,255,255,.012) 50%,transparent 51%);
+}
+
+.pulse div:nth-child(1) b{color:var(--signal-cyan)}
+.pulse div:nth-child(2) b{color:var(--signal-yellow)}
+.pulse div:nth-child(3) b{color:var(--signal-pink)}
+
+.move{color:var(--signal-cyan)!important}
+
+.track{
+  height:7px;
+  background:#20263a;
+}
+.track i{
+  background:linear-gradient(90deg,var(--signal-periwinkle),var(--signal-cyan),var(--signal-yellow));
+}
+
+.stageRow{
+  border-radius:8px;
+  overflow:hidden;
+}
+.stageRow div:nth-child(4n+1) b{color:var(--signal-pink)}
+.stageRow div:nth-child(4n+2) b{color:var(--signal-orange)}
+.stageRow div:nth-child(4n+3) b{color:var(--signal-cyan)}
+.stageRow div:nth-child(4n+4) b{color:var(--signal-periwinkle)}
+
+.pageHeader{
+  position:relative;
+  overflow:hidden;
+}
+.pageHeader::after{
+  content:"";
+  position:absolute;
+  right:0;
+  bottom:14px;
+  width:170px;
+  height:18px;
+  opacity:.32;
+  background:
+    linear-gradient(135deg,transparent 0 13%,var(--signal-pink) 14% 20%,transparent 21% 33%,var(--signal-orange) 34% 40%,transparent 41% 53%,var(--signal-cyan) 54% 60%,transparent 61% 73%,var(--signal-periwinkle) 74% 80%,transparent 81%);
+}
+
+.tableWrap table tbody tr{
+  transition:background .15s ease;
+}
+.tableWrap table tbody tr:hover{
+  background:rgba(143,152,255,.035);
+}
+
+.memo{
+  border-top:2px solid var(--signal-pink);
+}
+.memo .lead{
+  color:var(--signal-cream)!important;
+}
+.memo section:nth-child(3n+1) .eyebrow{color:var(--signal-pink)}
+.memo section:nth-child(3n+2) .eyebrow{color:var(--signal-orange)}
+.memo section:nth-child(3n) .eyebrow{color:var(--signal-cyan)}
+
+.lane:nth-child(4n+1)>header{color:var(--signal-pink)}
+.lane:nth-child(4n+2)>header{color:var(--signal-orange)}
+.lane:nth-child(4n+3)>header{color:var(--signal-cyan)}
+.lane:nth-child(4n+4)>header{color:var(--signal-periwinkle)}
+.lane article:hover{
+  border-color:#46506e;
+  transform:translateY(-1px);
+}
+
+button{
+  background:var(--signal-yellow);
+  border-color:var(--signal-yellow);
+}
+button:hover{filter:brightness(1.04)}
+button.secondary:hover{
+  border-color:var(--signal-cyan);
+  color:var(--signal-cyan);
+}
+
+.disclosure{
+  color:#7f879b;
+}
+
+@media(max-width:680px){
+  .hero::after,.pageHeader::after{opacity:.07}
+  .hero h1 em::after{display:none}
+}
