@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { VisualRecipe } from "@/data/visual-recipes";
+import type { VisualRecipe } from "@/lib/types";
 import { getGraphicElements } from "@/data/graphic-elements";
 
 type Status="idle"|"approved"|"watch"|"hold";
